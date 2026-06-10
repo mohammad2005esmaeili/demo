@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>محمدحسین اسماعیلی | فرانت‌اند دولوپر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:    #0a0a0a;
+      --dark:     #111111;
+      --surface:  #181818;
+      --card:     #1e1e1e;
+      --border:   #2a2a2a;
+      --silver:   #c0c0c0;
+      --silver-dim:#7a7a7a;
+      --white:    #f0f0f0;
+      --accent:   #a8a8a8;
+      --glow:     rgba(192,192,192,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Vazirmatn', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      color: var(--silver);
+      letter-spacing: 0.08em;
+    }
+
+    .nav-logo span { color: var(--white); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--silver-dim);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.03em;
+    }
+
+    nav a:hover { color: var(--silver); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* grid background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.25;
+      pointer-events: none;
+    }
+
+    /* silver radial glow top-left (RTL: right side) */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(192,192,192,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--silver-dim);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-label::before {
+      content: '> ';
+      color: var(--silver);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero h1 .name-accent {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--silver);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--silver-dim);
+      font-weight: 300;
+      margin-bottom: 3rem;
+      max-width: 560px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.75rem 2rem;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .btn-primary {
+      background: var(--silver);
+      color: var(--black);
+      border: 1px solid var(--silver);
+    }
+
+    .btn-primary:hover {
+      background: var(--white);
+      border-color: var(--white);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--silver);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--silver);
+      background: var(--glow);
+      transform: translateY(-2px);
+    }
+
+    /* ─── SECTION BASE ─── */
+    section {
+      padding: 6rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--silver-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3rem;
+      line-height: 1.2;
+    }
+
+    hr.divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ─── ABOUT ─── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--silver-dim);
+      font-size: 1rem;
+      line-height: 1.9;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-text p strong { color: var(--silver); font-weight: 600; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--silver-dim); }
+
+    .stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--silver);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--silver-dim);
+    }
+
+    /* ─── SKILLS ─── */
+    #skills { background: var(--dark); max-width: 100%; padding: 6rem 0; }
+    #skills .inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .skill-item:hover {
+      border-color: var(--silver-dim);
+      background: var(--surface);
+      transform: translateY(-2px);
+    }
+
+    .skill-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--silver);
+      opacity: 0.6;
+      min-width: 20px;
+    }
+
+    .skill-name {
+      font-size: 0.9rem;
+      color: var(--silver);
+      font-weight: 500;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 60px; height: 60px;
+      background: radial-gradient(circle at top right, rgba(192,192,192,0.06), transparent 70%);
+    }
+
+    .project-card:hover {
+      border-color: var(--silver-dim);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+    }
+
+    .project-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--silver-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .project-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.8rem;
+    }
+
+    .project-desc {
+      font-size: 0.88rem;
+      color: var(--silver-dim);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-tech {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tech-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--silver-dim);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.7rem;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .project-visual {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--border);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact { background: var(--dark); max-width: 100%; padding: 6rem 0; }
+    #contact .inner { max-width: 1100px; margin: 0 auto; padding: 0 4rem; }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .contact-info p {
+      color: var(--silver-dim);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--silver-dim);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+      padding: 0.8rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--card);
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      color: var(--silver);
+      border-color: var(--silver-dim);
+    }
+
+    .contact-link-icon {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--silver);
+      min-width: 24px;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-field label {
+      font-size: 0.8rem;
+      color: var(--silver-dim);
+      font-weight: 500;
+    }
+
+    .form-field input,
+    .form-field textarea {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 0.9rem;
+      padding: 0.75rem 1rem;
+      border-radius: 4px;
+      outline: none;
+      resize: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-color: var(--silver-dim);
+    }
+
+    .form-field textarea { height: 130px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--silver-dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ─── CURSOR DOT ─── */
+    .cursor {
+      display: inline-block;
+      width: 10px; height: 1.1em;
+      background: var(--silver);
+      margin-right: 4px;
+      vertical-align: middle;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      nav ul { gap: 1.5rem; }
+      .hero { padding: 7rem 1.5rem 3rem; }
+      section { padding: 4rem 1.5rem; }
+      #skills .inner, #contact .inner { padding: 0 1.5rem; }
+      #skills, #contact { padding: 4rem 0; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+      .about-grid, .projects-grid, .contact-layout { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .cursor { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo"><span>MH</span>.dev</div>
+    <ul>
+      <li><a href="#about">درباره</a></li>
+      <li><a href="#skills">مهارت‌ها</a></li>
+      <li><a href="#projects">پروژه‌ها</a></li>
+      <li><a href="#contact">تماس</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <p class="hero-label">Frontend Developer — محمدحسین اسماعیلی</p>
+    <h1>
+      رابط‌های کاربری<br>
+      <span class="name-accent">که زندگی می‌کنن</span>
+    </h1>
+    <p class="hero-sub">
+      کد می‌نویسم تا تجربه‌هایی بسازم که هم زیبا باشن، هم سریع، هم در دسترس — 
+      نه فقط برای چشم، بلکه برای آدم‌ها.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">دیدن پروژه‌ها</a>
+      <a href="#contact" class="btn btn-outline">بیا حرف بزنیم</a>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-eyebrow reveal">// about</p>
+    <h2 class="section-title reveal">یکم درباره من</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          من <strong>محمدحسین اسماعیلی</strong> هستم، یه فرانت‌اند دولوپر که عاشق تبدیل ایده‌های طراحی به تجربه‌های واقعی و قابل لمسه.
+        </p>
+        <p>
+          بیشتر وقتم رو با <strong>React</strong>، <strong>TypeScript</strong> و ابزارهای مدرن اکوسیستم جاوااسکریپت می‌گذرونم. برام مهمه که کدی که می‌نویسم نه‌تنها کار کنه، بلکه <strong>خوانا، قابل نگهداری و سریع</strong> باشه.
+        </p>
+        <p>
+          باور دارم یه وبسایت خوب باید مثل یه ابزار خوب باشه — دیده نشه، فقط کارشو درست انجام بده.
+        </p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <span class="stat-number">+۳</span>
+          <span class="stat-label">سال تجربه</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">+۲۰</span>
+          <span class="stat-label">پروژه تحویل‌داده‌شده</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">۱۵</span>
+          <span class="stat-label">تکنولوژی مسلط</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">∞</span>
+          <span class="stat-label">کنجکاوی</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="inner">
+      <p class="section-eyebrow reveal">// skills</p>
+      <h2 class="section-title reveal">ابزارهایی که باهاشون کار می‌کنم</h2>
+      <div class="skills-grid">
+        <div class="skill-item reveal"><span class="skill-icon">01</span><span class="skill-name">React.js</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">02</span><span class="skill-name">TypeScript</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">03</span><span class="skill-name">Next.js</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">04</span><span class="skill-name">Tailwind CSS</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">05</span><span class="skill-name">JavaScript (ES2024)</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">06</span><span class="skill-name">HTML5 / CSS3</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">07</span><span class="skill-name">Redux / Zustand</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">08</span><span class="skill-name">Framer Motion</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">09</span><span class="skill-name">Git & GitHub</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">10</span><span class="skill-name">Figma</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">11</span><span class="skill-name">REST API / GraphQL</span></div>
+        <div class="skill-item reveal"><span class="skill-icon">12</span><span class="skill-name">Vite / Webpack</span></div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-eyebrow reveal">// projects</p>
+    <h2 class="section-title reveal">چیزایی که ساختم</h2>
+    <div class="projects-grid">
+
+      <div class="project-card featured reveal">
+        <div>
+          <p class="project-tag">پروژه اصلی</p>
+          <h3 class="project-title">داشبورد مدیریت فروشگاه</h3>
+          <p class="project-desc">
+            یه داشبورد کامل برای مدیریت محصولات، سفارش‌ها و گزارش‌های فروش با رابط کاربری روان و ریسپانسیو. 
+            شامل نمودارهای تعاملی، فیلترهای پیشرفته و تم دارک/لایت.
+          </p>
+          <div class="project-tech">
+            <span class="tech-pill">React</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Recharts</span>
+            <span class="tech-pill">TanStack Query</span>
+            <span class="tech-pill">Tailwind</span>
+          </div>
+        </div>
+        <div class="project-visual">[ dashboard preview ]</div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-tag">وب اپ</p>
+        <h3 class="project-title">پلتفرم آموزش آنلاین</h3>
+        <p class="project-desc">
+          پلتفرم دوره‌های آنلاین با پخش ویدیو، مدیریت پیشرفت یادگیری و آزمون‌های تعاملی.
+        </p>
+        <div class="project-tech">
+          <span class="tech-pill">Next.js</span>
+          <span class="tech-pill">Zustand</span>
+          <span class="tech-pill">Framer Motion</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <p class="project-tag">لندینگ پیج</p>
+        <h3 class="project-title">سایت محصول SaaS</h3>
+        <p class="project-desc">
+          صفحه فرود انیمیت‌شده برای یه استارتاپ با Core Web Vitals امتیاز ۱۰۰ و لود زیر ۱ ثانیه.
+        </p>
+        <div class="project-tech">
+          <span class="tech-pill">Astro</span>
+          <span class="tech-pill">GSAP</span>
+          <span class="tech-pill">CSS</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="inner">
+      <p class="section-eyebrow reveal">// contact</p>
+      <h2 class="section-title reveal">بیا باهم کار کنیم</h2>
+      <div class="contact-layout">
+        <div class="contact-info reveal">
+          <p>
+            دنبال یه فرانت‌اند دولوپری که کارشو دوست داشته باشه و وقت تحویل رو جدی بگیره؟ خوشحال می‌شم بشنوم.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:mh.esmaeili@email.com" class="contact-link">
+              <span class="contact-link-icon">@</span>
+              mh.esmaeili@email.com
+            </a>
+            <a href="https://github.com/" class="contact-link" target="_blank">
+              <span class="contact-link-icon">&lt;/&gt;</span>
+              github.com/mh-esmaeili
+            </a>
+            <a href="https://linkedin.com/" class="contact-link" target="_blank">
+              <span class="contact-link-icon">in</span>
+              linkedin.com/in/mh-esmaeili
+            </a>
+          </div>
+        </div>
+        <form class="contact-form reveal" onsubmit="return false">
+          <div class="form-field">
+            <label for="name">اسم</label>
+            <input type="text" id="name" placeholder="اسمت چیه؟" />
+          </div>
+          <div class="form-field">
+            <label for="email">ایمیل</label>
+            <input type="email" id="email" placeholder="email@example.com" dir="ltr" />
+          </div>
+          <div class="form-field">
+            <label for="msg">پیام</label>
+            <textarea id="msg" placeholder="بگو چی داری تو ذهنت..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start">ارسال پیام</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© ۲۰۲۵ محمدحسین اسماعیلی</p>
+    <p>built with <span style="color:var(--silver)">♥</span> & coffee</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth nav highlight
+    const sections = document.querySelectorAll('section, #skills, #contact');
+    const links = document.querySelectorAll('nav a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 200) current = s.id;
+      });
+      links.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--silver)'
+          : 'var(--silver-dim)';
+      });
+    });
+  </script>
+</body>
+</html>
